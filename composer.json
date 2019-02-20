@@ -3,10 +3,8 @@
   "description": "rabbit auth",
   "type": "library",
   "require": {
-    "rabbit/framework": "dev-master",
-    "lcobucci/jwt": "4.0.0-alpha1"
+    "rabbit/framework": "dev-master"
   },
-  "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
     {

@@ -29,7 +29,7 @@ class QueryAuth extends AuthMethod
     {
         $query = $request->getQueryParams();
         if ($request->getQueryParams() && isset($query[$this->tokenParam])) {
-            $request->withAttribute(self::AUTH_TOKEN, $query[$this->tokenParam]);
+            $request->withAttribute(self::AUTH_TOKEN_STRING, $query[$this->tokenParam]);
             return true;
         }
         return false;

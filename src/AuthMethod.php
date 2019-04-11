@@ -16,6 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 abstract class AuthMethod
 {
+    const AUTH_TOKEN_STRING = 'auth_token_string';
     const AUTH_TOKEN = 'auth_token';
 
     /**

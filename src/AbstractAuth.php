@@ -39,6 +39,7 @@ abstract class AbstractAuth implements RequestHandlerInterface
      */
     public function auth(ServerRequestInterface $request): bool
     {
+        $res = false;
         foreach ($this->authMethod as $authMethod) {
             /** @var AuthMethod $authMethod */
             $authMethod = ObjectFactory::createObject($authMethod);
@@ -46,10 +47,13 @@ abstract class AbstractAuth implements RequestHandlerInterface
                 /** @var AuthInterface $auth */
                 $auth = getDI('auth');
                 /** @var Token $token */
-                $token = $auth->parseToken($request->getAttribute(AuthMethod::AUTH_TOKEN));
-                return !$token->isExpired(\DateTimeImmutable::createFromFormat('U.u', microtime(true)));
+                $token = $auth->parseToken($request->getAttribute(AuthMethod::AUTH_TOKEN_STRING));
+                $res = !$token->isExpired(\DateTimeImmutable::createFromFormat('U.u', microtime(true)));
+                if ($res) {
+                    $request->withAttribute(AuthMethod::AUTH_TOKEN, $token);
+                }
             }
         }
-        return false;
+        return $res;
     }
 }

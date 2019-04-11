@@ -43,7 +43,7 @@ class HttpHeaderAuth extends AuthMethod
                     return false;
                 }
             }
-            $request->withAttribute(self::AUTH_TOKEN, $authHeader);
+            $request->withAttribute(self::AUTH_TOKEN_STRING, $authHeader);
             return true;
         }
 

@@ -9,7 +9,6 @@
 namespace rabbit\auth;
 
 
-use Lcobucci\JWT\Token;
 use Psr\Http\Message\ServerRequestInterface;
 use rabbit\core\ObjectFactory;
 use rabbit\server\RequestHandlerInterface;
@@ -46,10 +45,9 @@ abstract class AbstractAuth implements RequestHandlerInterface
             if ($authMethod->authenticate($request)) {
                 /** @var AuthInterface $auth */
                 $auth = getDI('auth');
-                /** @var Token $token */
                 $token = $auth->parseToken($request->getAttribute(AuthMethod::AUTH_TOKEN_STRING));
-                $res = !$token->isExpired(\DateTimeImmutable::createFromFormat('U.u', microtime(true)));
-                if ($res) {
+                if ($token) {
+                    $res = true;
                     $request->withAttribute(AuthMethod::AUTH_TOKEN, $token);
                 }
             }

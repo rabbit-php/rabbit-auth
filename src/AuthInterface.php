@@ -8,8 +8,6 @@
 
 namespace rabbit\auth;
 
-use Lcobucci\JWT\Token;
-
 /**
  * Interface AuthInterface
  * @package rabbit\auth
@@ -18,13 +16,13 @@ interface AuthInterface
 {
     /**
      * @param string $token
-     * @return Token
+     * @return Object
      */
-    public function parseToken(string $token): Token;
+    public function parseToken(string $token): Object;
 
     /**
      * @param string $id
      * @return string
      */
-    public function getToken(string $id): string;
+    public function getToken(string $id, array $claim = []): string;
 }

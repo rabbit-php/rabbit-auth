@@ -8,11 +8,7 @@
 
 namespace rabbit\auth;
 
-use DateTimeImmutable;
-use Lcobucci\JWT\Signer;
-use Lcobucci\JWT\Token;
-use Lcobucci\JWT\Token\Builder;
-use Lcobucci\JWT\Token\Parser;
+use rabbit\auth\JWT\JWTInterface;
 
 /**
  * Class Auth
@@ -20,58 +16,49 @@ use Lcobucci\JWT\Token\Parser;
  */
 class Auth implements AuthInterface
 {
-    /** @var string */
-    protected $token;
     /** @var float|int */
     protected $duration = 30 * 60;
     /** @var string */
     protected $issuser = "rabbit.com";
     /** @var string */
     protected $secret = "rabbit)*#";
-    /** @var Signer */
-    protected $sign;
-    /** @var Parser */
-    protected $parser = Parser::class;
-    /** @var Signer\Key */
-    protected $key = Signer\Key::class;
+    /** @var JWTInterface */
+    protected $jwt;
+    /** @var string|null */
+    protected $kid = null;
+
 
     /**
      * Auth constructor.
-     * @param Signer $sign
+     * @param JWTInterface $jwt
      */
-    public function __construct(Signer $sign)
+    public function __construct(JWTInterface $jwt)
     {
-        $this->sign = $sign;
-        if (!$this->parser instanceof Parser) {
-            $this->parser = new Parser(getDI(\Lcobucci\Jose\Parsing\Parser::class));
-        }
-        if (!$this->key instanceof Signer\Key) {
-            $this->key = new Signer\Key($this->secret);
-        }
+        $this->jwt = $jwt;
     }
 
     /**
      * @param string $id
      * @return string
      */
-    public function getToken(string $id): string
+    public function getToken(string $id, array $claim = []): string
     {
-        $time = microtime(true);
-        $token = (new Builder(getDI(\Lcobucci\Jose\Parsing\Parser::class)))->issuedBy($this->issuser)
-            ->issuedAt(DateTimeImmutable::createFromFormat("U.u", $time))->identifiedBy($id);
-        if ($this->duration > 0) {
-            $token = $token->expiresAt(DateTimeImmutable::createFromFormat("U.u", $time + $this->duration));
-        }
-
-        return $token->getToken($this->sign, $this->key);
+        $time = time();
+        $token = array(
+            "iss" => $this->issuser,
+            "iat" => $time,
+            'id' => $id
+        );
+        return $this->kid !== null ? $this->jwt->encode($this->secret, $token, ['kid' => $this->kid])
+            : $this->jwt->encode($this->secret, $token);
     }
 
     /**
      * @param string $token
-     * @return Token
+     * @return Object
      */
-    public function parseToken(string $token): Token
+    public function parseToken(string $token): Object
     {
-        return $this->parser->parse($token);
+        return $this->jwt->decode($token, [$this->secret], array('HS256'));
     }
 }

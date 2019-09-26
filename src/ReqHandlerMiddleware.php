@@ -6,7 +6,7 @@
  * Time: 16:30
  */
 
-namespace rabbit\auth\middleware;
+namespace rabbit\auth;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

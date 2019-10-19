@@ -8,7 +8,6 @@
 
 namespace rabbit\auth;
 
-
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

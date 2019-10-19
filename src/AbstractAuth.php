@@ -8,7 +8,6 @@
 
 namespace rabbit\auth;
 
-
 use Psr\Http\Message\ServerRequestInterface;
 use rabbit\core\ObjectFactory;
 use rabbit\server\RequestHandlerInterface;

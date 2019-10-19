@@ -34,5 +34,4 @@ class QueryAuth extends AuthMethod
         }
         return false;
     }
-
 }

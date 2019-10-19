@@ -23,5 +23,5 @@ abstract class AuthMethod
      * @param ServerRequestInterface $request
      * @return bool
      */
-    abstract function authenticate(ServerRequestInterface $request): bool;
+    abstract public function authenticate(ServerRequestInterface $request): bool;
 }

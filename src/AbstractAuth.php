@@ -40,7 +40,7 @@ abstract class AbstractAuth implements RequestHandlerInterface
         $res = false;
         foreach ($this->authMethod as $authMethod) {
             /** @var AuthMethod $authMethod */
-            $authMethod = ObjectFactory::createObject($authMethod);
+            $authMethod = getDI($authMethod);
             if ($authMethod->authenticate($request)) {
                 /** @var AuthInterface $auth */
                 $auth = getDI('auth');

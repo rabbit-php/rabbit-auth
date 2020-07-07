@@ -1,25 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20
- * Time: 3:27
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 /**
  * Class HttpBearerAuth
- * @package rabbit\auth
+ * @package Rabbit\Auth
  */
 class HttpBearerAuth extends HttpHeaderAuth
 {
     /**
      * {@inheritdoc}
      */
-    protected $header = 'Authorization';
+    protected string $header = 'Authorization';
     /**
      * {@inheritdoc}
      */
-    protected $pattern = '/^Bearer\s+(.*?)$/';
+    protected string $pattern = '/^Bearer\s+(.*?)$/';
 }

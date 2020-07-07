@@ -1,11 +1,14 @@
 <?php
-namespace rabbit\auth\JWT;
+declare(strict_types=1);
 
-use rabbit\core\Exception;
+namespace Rabbit\Auth\JWT;
+
+
+use Rabbit\Base\Core\Exception;
 
 /**
  * Class BeforeValidException
- * @package rabbit\auth\JWT
+ * @package Rabbit\Auth\JWT
  */
 class BeforeValidException extends Exception
 {

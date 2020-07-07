@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
-
-namespace rabbit\auth\JWT;
+namespace Rabbit\Auth\JWT;
 
 /**
  * Interface JWTInterface

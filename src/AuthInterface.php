@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/19
- * Time: 19:47
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 /**
  * Interface AuthInterface
- * @package rabbit\auth
+ * @package Rabbit\Auth
  */
 interface AuthInterface
 {
@@ -22,6 +17,7 @@ interface AuthInterface
 
     /**
      * @param string $id
+     * @param array $claim
      * @return string
      */
     public function getToken(string $id, array $claim = []): string;

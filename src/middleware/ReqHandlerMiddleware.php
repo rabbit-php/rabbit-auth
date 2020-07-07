@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/18
- * Time: 16:30
- */
+declare(strict_types=1);
 
-namespace rabbit\auth\middleware;
+namespace Rabbit\Auth\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use rabbit\auth\AbstractAuth;
-use rabbit\core\Context;
-use rabbit\server\AttributeEnum;
-use rabbit\web\HttpException;
-use rabbit\web\NotFoundHttpException;
+use Rabbit\Auth\AbstractAuth;
+use Rabbit\Base\Core\Context;
+use Rabbit\Web\AttributeEnum;
+use Rabbit\Web\HttpException;
+use Rabbit\Web\NotFoundHttpException;
+use Throwable;
 
 /**
  * Class ReqHandlerMiddleware
@@ -30,8 +26,7 @@ class ReqHandlerMiddleware implements MiddlewareInterface
      * @return ResponseInterface
      * @throws HttpException
      * @throws NotFoundHttpException
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws Throwable
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

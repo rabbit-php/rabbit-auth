@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20
- * Time: 3:06
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,11 +14,11 @@ class HttpHeaderAuth extends AuthMethod
     /**
      * @var string the HTTP header name
      */
-    protected $header = 'X-Api-Key';
+    protected string $header = 'X-Api-Key';
     /**
      * @var string a pattern to use to extract the HTTP authentication value
      */
-    protected $pattern;
+    protected string $pattern;
 
 
     /**

@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/19
- * Time: 14:14
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
-use rabbit\auth\JWT\JWTInterface;
+
+use Rabbit\Auth\JWT\JWTInterface;
 
 /**
  * Class Auth
@@ -16,16 +12,16 @@ use rabbit\auth\JWT\JWTInterface;
  */
 class Auth implements AuthInterface
 {
-    /** @var float|int */
-    protected $duration = 30 * 60;
+    /** @var int */
+    protected int $duration = 30 * 60;
     /** @var string */
-    protected $issuser = "rabbit.com";
+    protected string $issuser = "rabbit.com";
     /** @var string */
-    protected $secret = "rabbit)*#";
+    protected string $secret = "rabbit)*#";
     /** @var JWTInterface */
-    protected $jwt;
+    protected JWTInterface $jwt;
     /** @var string|null */
-    protected $kid = null;
+    protected ?string $kid = null;
 
 
     /**
@@ -39,6 +35,7 @@ class Auth implements AuthInterface
 
     /**
      * @param string $id
+     * @param array $claim
      * @return string
      */
     public function getToken(string $id, array $claim = []): string

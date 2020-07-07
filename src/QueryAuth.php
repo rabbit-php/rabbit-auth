@@ -1,25 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20
- * Time: 2:49
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class QueryAuth
- * @package rabbit\auth
+ * @package Rabbit\Auth
  */
 class QueryAuth extends AuthMethod
 {
     /**
      * @var string the parameter name for passing the access token
      */
-    private $tokenParam = 'access-token';
+    private string $tokenParam = 'access-token';
 
     /**
      * @param ServerRequestInterface $request

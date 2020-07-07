@@ -1,23 +1,24 @@
 <?php
+declare(strict_types=1);
 
-namespace rabbit\auth\JWT;
+namespace Rabbit\Auth\JWT;
 
 use DateTime;
 use DomainException;
 use InvalidArgumentException;
-use rabbit\helper\ArrayHelper;
+use Rabbit\Base\Helper\ArrayHelper;
 use UnexpectedValueException;
 
 /**
  * Class JWT
- * @package rabbit\auth\JWT
+ * @package Rabbit\Auth\JWT
  */
 class JWT implements JWTInterface
 {
     /** @var int */
-    private $leeway = 0;
+    private int $leeway = 0;
     /** @var null |int */
-    private $timestamp = null;
+    private ?int $timestamp = null;
 
     const SUPPORTED_ALGS = array(
         'HS256' => array('hash_hmac', 'SHA256'),
@@ -37,7 +38,7 @@ class JWT implements JWTInterface
      * @throws ExpiredException
      * @throws SignatureInvalidException
      */
-    public function decode(string $jwt, array $key, array $allowed_algs = array()): Object
+    public function decode(string $jwt, array $key, array $allowed_algs = array()): object
     {
         $timestamp = is_null($this->timestamp) ? time() : $this->timestamp;
 
@@ -217,7 +218,7 @@ class JWT implements JWTInterface
      *
      * @throws DomainException Provided string was invalid JSON
      */
-    public function jsonDecode(string $input): Object
+    public function jsonDecode(string $input): object
     {
         if (!(defined('JSON_C_VERSION') && PHP_INT_SIZE > 4)) {
             /** In PHP >=5.4.0, json_decode() accepts an options parameter, that allows you

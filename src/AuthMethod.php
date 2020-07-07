@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20
- * Time: 2:44
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Interface AuthMethoInterface
- * @package rabbit\auth
+ * Class AuthMethod
+ * @package Rabbit\Auth
  */
 abstract class AuthMethod
 {

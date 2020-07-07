@@ -1,16 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/2/20
- * Time: 2:24
- */
+declare(strict_types=1);
 
-namespace rabbit\auth;
+namespace Rabbit\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
-use rabbit\core\ObjectFactory;
-use rabbit\server\RequestHandlerInterface;
+use Rabbit\Web\RequestHandlerInterface;
+use Throwable;
 
 /**
  * Class AbstractHandler
@@ -21,7 +16,7 @@ abstract class AbstractAuth implements RequestHandlerInterface
     /**
      * @var AuthMethod[]
      */
-    protected $authMethod = [
+    protected array $authMethod = [
         [
             'class' => QueryAuth::class,
         ], [
@@ -32,15 +27,14 @@ abstract class AbstractAuth implements RequestHandlerInterface
     /**
      * @param ServerRequestInterface $request
      * @return bool
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws Throwable
      */
     public function auth(ServerRequestInterface $request): bool
     {
         $res = false;
         foreach ($this->authMethod as $authMethod) {
             /** @var AuthMethod $authMethod */
-            $authMethod = ObjectFactory::createObject($authMethod);
+            $authMethod = create($authMethod);
             if ($authMethod->authenticate($request)) {
                 /** @var AuthInterface $auth */
                 $auth = getDI('auth');

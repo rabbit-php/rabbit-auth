@@ -8,15 +8,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Rabbit\Auth\AbstractAuth;
-use Rabbit\Base\Core\Context;
+use Rabbit\HttpServer\Exceptions\HttpException;
+use Rabbit\HttpServer\Exceptions\NotFoundHttpException;
 use Rabbit\Web\AttributeEnum;
-use Rabbit\Web\HttpException;
-use Rabbit\Web\NotFoundHttpException;
+use Rabbit\Web\ResponseContext;
 use Throwable;
 
 /**
  * Class ReqHandlerMiddleware
- * @package rabbit\auth\middleware
+ * @package Rabbit\Auth\Middleware
  */
 class ReqHandlerMiddleware implements MiddlewareInterface
 {
@@ -49,10 +49,7 @@ class ReqHandlerMiddleware implements MiddlewareInterface
          */
         $response = $class($request->getQueryParams(), $request);
         if (!$response instanceof ResponseInterface) {
-            /**
-             * @var ResponseInterface $newResponse
-             */
-            $newResponse = Context::get('response');
+            $newResponse = ResponseContext::get();
             $newResponse->withAttribute(AttributeEnum::RESPONSE_ATTRIBUTE, $response);
         }
 

@@ -7,16 +7,16 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use rabbit\auth\AbstractAuth;
-use rabbit\core\Context;
-use rabbit\core\ObjectFactory;
-use rabbit\server\AttributeEnum;
-use rabbit\web\HttpException;
-use rabbit\web\NotFoundHttpException;
+use Rabbit\Auth\AbstractAuth;
+use Rabbit\HttpServer\Exceptions\HttpException;
+use Rabbit\HttpServer\Exceptions\NotFoundHttpException;
+use Rabbit\Web\AttributeEnum;
+use Rabbit\Web\ResponseContext;
+use Throwable;
 
 /**
  * Class EndMiddleware
- * @package rabbit\auth\middleware
+ * @package Rabbit\Auth\Middleware
  */
 class EndMiddleware implements MiddlewareInterface
 {
@@ -24,7 +24,9 @@ class EndMiddleware implements MiddlewareInterface
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
-     * @throws \Exception
+     * @throws HttpException
+     * @throws NotFoundHttpException
+     * @throws Throwable
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -42,7 +44,7 @@ class EndMiddleware implements MiddlewareInterface
                 $controller .= '\\' . $value;
             }
         }
-        $controller = ObjectFactory::get($controller);
+        $controller = getDI($controller);
         if ($controller === null) {
             throw new NotFoundHttpException("can not find the route:$route");
         }
@@ -54,10 +56,7 @@ class EndMiddleware implements MiddlewareInterface
          */
         $response = call_user_func_array([$controller, $action], $request->getQueryParams());
         if (!$response instanceof ResponseInterface) {
-            /**
-             * @var ResponseInterface $newResponse
-             */
-            $newResponse = Context::get('response');
+            $newResponse = ResponseContext::get();
             $newResponse->withAttribute(AttributeEnum::RESPONSE_ATTRIBUTE, $response);
         }
 

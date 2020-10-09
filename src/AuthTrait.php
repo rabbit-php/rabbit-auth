@@ -1,17 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Rabbit\Web\RequestHandlerInterface;
 use Throwable;
+use Psr\Http\Message\ServerRequestInterface;
 
-/**
- * Class AbstractHandler
- * @package rabbit\auth
- */
-abstract class AbstractAuth implements RequestHandlerInterface
+
+trait AuthTrait
 {
     /**
      * @var AuthMethod[]

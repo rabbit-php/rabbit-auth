@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth;
@@ -41,11 +42,11 @@ class Auth implements AuthInterface
     public function getToken(string $id, array $claim = []): string
     {
         $time = time();
-        $token = array(
+        $token = array_merge($claim, [
             "iss" => $this->issuser,
             "iat" => $time,
             'id' => $id
-        );
+        ]);
         return $this->kid !== null ? $this->jwt->encode($this->secret, $token, ['kid' => $this->kid])
             : $this->jwt->encode($this->secret, $token);
     }

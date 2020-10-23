@@ -51,7 +51,7 @@ class ReqHandlerMiddleware implements MiddlewareInterface
         $response = $class($request->getQueryParams(), $request);
         if (!$response instanceof ResponseInterface) {
             $newResponse = ResponseContext::get();
-            $this->handleAccept($request, $newResponse, $response);
+            return $this->handleAccept($request, $newResponse, $response);
         }
 
         return $handler->handle($request);

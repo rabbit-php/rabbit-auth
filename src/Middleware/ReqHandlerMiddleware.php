@@ -1,18 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth\Middleware;
 
+use Throwable;
+use Rabbit\Web\ResponseContext;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Rabbit\Auth\AbstractAuth;
+use Rabbit\HttpServer\Middleware\AcceptTrait;
 use Rabbit\HttpServer\Exceptions\HttpException;
 use Rabbit\HttpServer\Exceptions\NotFoundHttpException;
-use Rabbit\Web\AttributeEnum;
-use Rabbit\Web\ResponseContext;
-use Throwable;
 
 /**
  * Class ReqHandlerMiddleware
@@ -20,6 +20,7 @@ use Throwable;
  */
 class ReqHandlerMiddleware implements MiddlewareInterface
 {
+    use AcceptTrait;
     /**
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
@@ -41,7 +42,7 @@ class ReqHandlerMiddleware implements MiddlewareInterface
         if ($class === null) {
             throw new NotFoundHttpException("can not find the route:" . $request->getUri()->getPath());
         }
-        if ($class instanceof AbstractAuth && !$class->auth($request)) {
+        if (method_exists($class, 'auth') && !$class->auth($request)) {
             throw new HttpException(401, 'Your request was made with invalid credentials.');
         }
         /**
@@ -50,7 +51,7 @@ class ReqHandlerMiddleware implements MiddlewareInterface
         $response = $class($request->getQueryParams(), $request);
         if (!$response instanceof ResponseInterface) {
             $newResponse = ResponseContext::get();
-            $newResponse->withAttribute(AttributeEnum::RESPONSE_ATTRIBUTE, $response);
+            $this->handleAccept($request, $newResponse, $response);
         }
 
         return $handler->handle($request);

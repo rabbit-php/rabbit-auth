@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth;
@@ -25,7 +26,7 @@ class HttpHeaderAuth extends AuthMethod
      * @param ServerRequestInterface $request
      * @return bool
      */
-    public function authenticate(ServerRequestInterface $request): bool
+    public function authenticate(ServerRequestInterface $request): ?string
     {
         $authHeader = $request->getHeaderLine($this->header);
 
@@ -34,13 +35,12 @@ class HttpHeaderAuth extends AuthMethod
                 if (preg_match($this->pattern, $authHeader, $matches)) {
                     $authHeader = $matches[1];
                 } else {
-                    return false;
+                    return null;
                 }
             }
-            $request->withAttribute(self::AUTH_TOKEN_STRING, $authHeader);
-            return true;
+            return $authHeader;
         }
 
-        return false;
+        return null;
     }
 }

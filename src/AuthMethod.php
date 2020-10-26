@@ -12,11 +12,12 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class AuthMethod
 {
     const AUTH_TOKEN_STRING = 'auth_token_string';
-    const AUTH_TOKEN = 'auth_token';
 
     /**
-     * @param ServerRequestInterface $request
-     * @return bool
+     * @Author Albert 63851587@qq.com
+     * @DateTime 2020-10-26
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return string|null
      */
-    abstract public function authenticate(ServerRequestInterface $request): bool;
+    abstract public function authenticate(ServerRequestInterface $request): ?string;
 }

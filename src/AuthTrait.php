@@ -7,7 +7,6 @@ namespace Rabbit\Auth;
 use Throwable;
 use Psr\Http\Message\ServerRequestInterface;
 
-
 trait AuthTrait
 {
     /**
@@ -28,20 +27,19 @@ trait AuthTrait
      */
     public function auth(ServerRequestInterface $request): bool
     {
-        $res = false;
         foreach ($this->authMethod as $authMethod) {
             /** @var AuthMethod $authMethod */
             $authMethod = create($authMethod);
-            if ($authMethod->authenticate($request)) {
+            if (null !== $strToken = $authMethod->authenticate($request)) {
                 /** @var AuthInterface $auth */
                 $auth = getDI('auth');
-                $token = $auth->parseToken($request->getAttribute(AuthMethod::AUTH_TOKEN_STRING));
+                $token = $auth->parseToken($strToken);
                 if ($token) {
-                    $res = true;
-                    $request->withAttribute(AuthMethod::AUTH_TOKEN, $token);
+                    UserContext::set($token);
+                    return true;
                 }
             }
         }
-        return $res;
+        return false;
     }
 }

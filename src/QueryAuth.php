@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth;
@@ -17,16 +18,17 @@ class QueryAuth extends AuthMethod
     private string $tokenParam = 'access-token';
 
     /**
-     * @param ServerRequestInterface $request
-     * @return bool
+     * @Author Albert 63851587@qq.com
+     * @DateTime 2020-10-26
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return string|null
      */
-    public function authenticate(ServerRequestInterface $request): bool
+    public function authenticate(ServerRequestInterface $request): ?string
     {
         $query = $request->getQueryParams();
         if ($request->getQueryParams() && isset($query[$this->tokenParam])) {
-            $request->withAttribute(self::AUTH_TOKEN_STRING, $query[$this->tokenParam]);
-            return true;
+            return $query[$this->tokenParam];
         }
-        return false;
+        return null;
     }
 }

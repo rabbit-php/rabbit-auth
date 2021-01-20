@@ -6,8 +6,9 @@ namespace Rabbit\Auth;
 
 use Throwable;
 use Psr\Http\Message\ServerRequestInterface;
+use Rabbit\Auth\JWT\JWTAuthInterface;
 
-trait AuthTrait
+class JWTAuth implements JWTAuthInterface
 {
     /**
      * @var AuthMethod[]

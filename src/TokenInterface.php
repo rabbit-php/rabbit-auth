@@ -1,13 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth;
 
-/**
- * Interface AuthInterface
- * @package Rabbit\Auth
- */
-interface AuthInterface
+interface TokenInterface
 {
     /**
      * @param string $token

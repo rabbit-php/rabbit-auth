@@ -7,11 +7,8 @@ namespace Rabbit\Auth;
 
 use Rabbit\Auth\JWT\JWTInterface;
 
-/**
- * Class Auth
- * @package rabbit\auth
- */
-class Auth implements AuthInterface
+
+class TokenParser implements TokenInterface
 {
     /** @var int */
     protected int $duration = 30 * 60;

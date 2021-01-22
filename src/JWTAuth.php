@@ -15,6 +15,11 @@ class JWTAuth implements JWTAuthInterface
     {
         $this->auth = $auth;
     }
+
+    public function getAuth(): TokenInterface
+    {
+        return $this->auth;
+    }
     /**
      * @var AuthMethod[]
      */

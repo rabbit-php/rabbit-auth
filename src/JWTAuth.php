@@ -11,6 +11,7 @@ use Rabbit\Auth\JWT\JWTAuthInterface;
 class JWTAuth implements JWTAuthInterface
 {
     protected TokenInterface $auth;
+
     public function __construct(TokenInterface $auth)
     {
         $this->auth = $auth;
@@ -20,9 +21,7 @@ class JWTAuth implements JWTAuthInterface
     {
         return $this->auth;
     }
-    /**
-     * @var AuthMethod[]
-     */
+
     protected array $authMethod = [
         [
             'class' => QueryAuth::class,
@@ -38,9 +37,8 @@ class JWTAuth implements JWTAuthInterface
      */
     public function auth(ServerRequestInterface $request): bool
     {
-        foreach ($this->authMethod as $authMethod) {
-            /** @var AuthMethod $authMethod */
-            $authMethod = create($authMethod);
+        foreach ($this->authMethod as $class) {
+            $authMethod = create($class);
             if (null !== $strToken = $authMethod->authenticate($request)) {
                 $token = $this->auth->parseToken($strToken);
                 if ($token) {

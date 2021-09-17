@@ -6,7 +6,7 @@ namespace Rabbit\Auth;
 
 class UserContext
 {
-    public static function set(object $response)
+    public static function set(object $response): void
     {
         getContext(getRootId())['login.user'] = $response;
     }

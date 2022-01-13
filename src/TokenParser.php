@@ -39,11 +39,12 @@ class TokenParser implements TokenInterface
     public function getToken(string $id, array $claim = []): string
     {
         $time = time();
-        $token = array_merge($claim, [
+        $token = [
+            ...$claim,
             "iss" => $this->issuser,
             "iat" => $time,
             'id' => $id
-        ]);
+        ];
         return $this->kid !== null ? $this->jwt->encode($this->secret, $token, ['kid' => $this->kid])
             : $this->jwt->encode($this->secret, $token);
     }

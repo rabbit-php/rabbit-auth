@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Rabbit\Auth\JWT;
@@ -121,7 +122,7 @@ class JWT implements JWTInterface
     {
         $alg = ArrayHelper::getValue($head, 'alg', 'HS256');
         $header = array('typ' => 'JWT', 'alg' => $alg);
-        $header = array_merge($head, $header);
+        $header = [...$head, ...$header];
         $segments = array();
         $segments[] = $this->urlsafeB64Encode($this->jsonEncode($header));
         $segments[] = $this->urlsafeB64Encode($this->jsonEncode($payload));

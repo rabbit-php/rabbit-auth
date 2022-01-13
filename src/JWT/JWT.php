@@ -69,7 +69,7 @@ class JWT implements JWTInterface
         if (!in_array($header->alg, $allowed_algs)) {
             throw new UnexpectedValueException('Algorithm not allowed');
         }
-        if (ArrayHelper::isAssociative($key)) {
+        if (!array_is_list($key)) {
             if (isset($header->kid)) {
                 if (!isset($key[$header->kid])) {
                     throw new UnexpectedValueException('"kid" invalid, unable to lookup correct key');

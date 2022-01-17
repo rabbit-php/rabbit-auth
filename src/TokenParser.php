@@ -10,15 +10,9 @@ use Rabbit\Auth\JWT\JWTInterface;
 
 class TokenParser implements TokenInterface
 {
-    /** @var int */
     protected int $duration = 30 * 60;
-    /** @var string */
     protected string $issuser = "rabbit.com";
-    /** @var string */
     protected string $secret = "rabbit)*#";
-    /** @var JWTInterface */
-    protected JWTInterface $jwt;
-    /** @var string|null */
     protected ?string $kid = null;
 
 
@@ -26,9 +20,8 @@ class TokenParser implements TokenInterface
      * Auth constructor.
      * @param JWTInterface $jwt
      */
-    public function __construct(JWTInterface $jwt)
+    public function __construct(protected JWTInterface $jwt)
     {
-        $this->jwt = $jwt;
     }
 
     /**

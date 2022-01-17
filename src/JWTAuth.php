@@ -10,11 +10,8 @@ use Rabbit\Auth\JWT\JWTAuthInterface;
 
 class JWTAuth implements JWTAuthInterface
 {
-    protected TokenInterface $auth;
-
-    public function __construct(TokenInterface $auth)
+    public function __construct(protected TokenInterface $auth)
     {
-        $this->auth = $auth;
     }
 
     public function getAuth(): TokenInterface

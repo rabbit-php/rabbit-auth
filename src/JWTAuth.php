@@ -21,9 +21,9 @@ class JWTAuth implements JWTAuthInterface
 
     protected array $authMethod = [
         [
-            'class' => QueryAuth::class,
+            '{}' => QueryAuth::class,
         ], [
-            'class' => HttpBearerAuth::class
+            '{}' => HttpBearerAuth::class
         ]
     ];
 
